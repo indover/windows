@@ -1,0 +1,67 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Calendar</h3>
+    </div>
+    <div class="card-body">
+        <div id="calendar" style="max-width: 100%;"></div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookingModalLabel">Booking Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="bookingDetails"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#calendar').fullCalendar({
+            events: '/admin/calendar/events',
+            eventClick: function(event) {
+                $.ajax({
+                    url: '/admin/calendar/booking/' + event.id, // Змінили URL для використання ідентифікатора події
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.error) {
+                            alert(response.error);
+                            return;
+                        }
+
+                        $('#bookingDetails').html(
+                            '<p><strong>Windows count:</strong> ' + response.count + '</p>' +
+                            '<p><strong>Address:</strong> ' + response.address + '</p>' +
+                            '<p><strong>Details:</strong></p>' +
+                            '<ul>' +
+                            response.details.map(function(detail) {
+                                return '<li>' + detail + '</li>';
+                            }).join('') + '</ul>')
+                        $('#bookingModal').modal('show');
+                    }
+                });
+            }
+        });
+        $('.modal').on('click', '.close, [data-dismiss="modal"]', function() {
+            $(this).closest('.modal').modal('hide');
+        });
+    });
+</script>

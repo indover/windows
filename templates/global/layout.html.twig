@@ -1,0 +1,10 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block body_actions %}
+    {{ parent() }}
+
+    {# Add the DETAIL button #}
+    <a href="{{ path('admin_global_detail') }}" class="btn btn-secondary">
+        Detail
+    </a>
+{% endblock %}
