@@ -39,7 +39,7 @@
             events: '/admin/calendar/events',
             eventClick: function(event) {
                 $.ajax({
-                    url: '/admin/calendar/booking/' + event.id, // Змінили URL для використання ідентифікатора події
+                    url: '/admin/calendar/booking/' + event.id,
                     method: 'GET',
                     success: function(response) {
                         if (response.error) {

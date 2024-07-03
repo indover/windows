@@ -8,7 +8,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WindowRepository::class)]
-#[ORM\Table]
+#[ORM\Table(name: 'windows')]
 #[ApiResource]
 class Window
 {
@@ -122,13 +122,19 @@ class Window
         $this->updatedAt = $updatedAt;
     }
 
+    public function getMeasurement()
+    {
+        return $this->__toString();
+    }
+    
     public function __toString()
     {
-        $data = $this->getName() . ' - H:' . $this->getHeight() .  '  ||   W:' . $this->getWidth();
+        $data = $this->getName() . ' - H:' . $this->getHeight() .  '  X   W:' . $this->getWidth();
 
         if ($this->getNotes() !== null) {
-            $data.= $data . '  || Note: ' . $this->getNotes();
+            $data.= '  || Note: ' . $this->getNotes();
         }
+
         return $data;
     }
 }

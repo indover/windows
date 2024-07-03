@@ -30,7 +30,7 @@ class CalendarAdminController extends AbstractController
         $bookedDates = array_map(function ($booking) {
             return [
                 'id' => $booking->getId(),
-                'title' => 'Booked',
+                'title' => $booking->getStatus()->getStatus(),
                 'start' => $booking->getInstallationDate()->format('Y-m-d'),
                 'color' => $booking->getStatus()->getColor(),
             ];
@@ -41,7 +41,6 @@ class CalendarAdminController extends AbstractController
 
 
     #[Route('/admin/calendar/booking/{id}', name: 'admin_calendar_booking_detail', methods: ['GET'])]
-
     public function getBookingDetail($id): JsonResponse
     {
         $booking = $this->orderRepository->find($id);

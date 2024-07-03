@@ -185,7 +185,7 @@ class WindowOrder
     {
         $data = [];
         foreach ($this->getWindows() as $window) {
-            $data[] = $window->getName() .' || '. $window->getWidth() .' || '. $window->getHeight() . ' ' . $window->getNotes();
+            $data[] = $window->getMeasurement();
         }
 
         return $data;

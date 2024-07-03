@@ -7,8 +7,8 @@ use App\Repository\RoleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RoleRepository::class)]
-#[ORM\Table(name: '`role`')]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['role'])]
+#[ORM\Table(name: 'role')]
+#[ORM\UniqueConstraint(fields: ['role'])]
 #[ApiResource]
 class Role
 {

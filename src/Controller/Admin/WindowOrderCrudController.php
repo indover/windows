@@ -46,9 +46,9 @@ class WindowOrderCrudController extends AbstractCrudController
             DateTimeField::new('installationDate'),
             MoneyField::new('price')->setCurrency('CAD'),
             AssociationField::new('status')->autocomplete(),
-//            CollectionField::new('windows')->useEntryCrudForm(WindowCrudController::class)->hideOnIndex(),
-//            CollectionField::new('windows')->onlyOnDetail()->setEntryType(WindowCrudController::class)
-//                ->setTemplatePath('admin/windows/index.html.twig'),
+           CollectionField::new('windows')->useEntryCrudForm(WindowCrudController::class)->hideOnIndex(),
+           CollectionField::new('windows')->onlyOnDetail()->setEntryType(WindowCrudController::class)
+               ->setTemplatePath('admin/windows/index.html.twig'),
             IntegerField::new('numberOfWindows', 'Windows count')->onlyOnIndex(),
             ArrayField::new('getNameOfWindows', 'Name & size')->onlyOnIndex(),
             ArrayField::new('windows','windows')->onlyOnDetail(),

@@ -52,7 +52,6 @@ class UserCrudController extends AbstractCrudController
             TextField::new('lastName'),
             TextField::new('role')->hideOnForm()
 
-
         ];
         $roles = ChoiceField::new('roles', 'Roles')
             ->setRequired($pageName === Crud::PAGE_NEW)
@@ -74,13 +73,29 @@ class UserCrudController extends AbstractCrudController
 
     public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface
     {
+        if (!$formOptions->has('data_class')) {
+            $formOptions->set('data_class', $entityDto->getFqcn());
+        }
+
+        dump($entityDto, $formOptions, $context); 
         $formBuilder = parent::createNewFormBuilder($entityDto, $formOptions, $context);
+        dump($formBuilder);
+        
+        if ($formBuilder === null) {
+            throw new \RuntimeException('Unable to create form builder');
+        }
+
         return $this->addPasswordEventListener($formBuilder);
     }
 
     public function createEditFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface
     {
         $formBuilder = parent::createEditFormBuilder($entityDto, $formOptions, $context);
+
+        if ($formBuilder === null) {
+            throw new \RuntimeException('Unable to create form builder');
+        }
+
         return $this->addPasswordEventListener($formBuilder);
     }
 
@@ -89,9 +104,6 @@ class UserCrudController extends AbstractCrudController
         return $formBuilder->addEventListener(FormEvents::POST_SUBMIT, $this->hashPassword());
     }
 
-    /**
-     * @return Closure
-     */
     private function hashPassword(): Closure
     {
         return function ($event) {
