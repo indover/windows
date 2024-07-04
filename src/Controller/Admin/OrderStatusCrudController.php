@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\OrderStatus;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -20,7 +21,7 @@ class OrderStatusCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideonForm()->hideOnIndex(),
             TextField::new('status'),
-            TextField::new('color')
+            ColorField::new('color')
         ];
     }
 }
