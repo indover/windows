@@ -51,7 +51,7 @@ class CalendarAdminController extends AbstractController
 
         return new JsonResponse([
             'count' => $booking->getNumberOfWindows(),
-            'address' => 'Customer address here',
+            'address' => $booking?->getCustomer()?->getAddress() ?? 'Empty address, should update Customer.',
             'details' => $booking->getWindowsMeasurement()
         ]);
     }

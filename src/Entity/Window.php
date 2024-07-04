@@ -122,14 +122,14 @@ class Window
         $this->updatedAt = $updatedAt;
     }
 
-    public function getMeasurement()
+    public function getMeasurement(): string
     {
         return $this->__toString();
     }
     
     public function __toString()
     {
-        $data = $this->getName() . ' - H:' . $this->getHeight() .  '  X   W:' . $this->getWidth();
+        $data = $this->getName() . ' - H:' . $this->getHeight() .  '  x   W:' . $this->getWidth();
 
         if ($this->getNotes() !== null) {
             $data.= '  || Note: ' . $this->getNotes();
