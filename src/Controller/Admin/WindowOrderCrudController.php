@@ -41,11 +41,12 @@ class WindowOrderCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideonForm()->hideOnIndex(),
+            AssociationField::new('customer')->autocomplete(),
             TextField::new('name'),
             TextField::new('note'),
             DateTimeField::new('installationDate'),
             MoneyField::new('price')->setCurrency('CAD'),
-            AssociationField::new('status')->autocomplete(),
+            AssociationField::new('status')->autocomplete()->setRequired(true),
            CollectionField::new('windows')->useEntryCrudForm(WindowCrudController::class)->hideOnIndex(),
            CollectionField::new('windows')->onlyOnDetail()->setEntryType(WindowCrudController::class)
                ->setTemplatePath('admin/windows/index.html.twig'),
