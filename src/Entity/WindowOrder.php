@@ -32,6 +32,10 @@ class WindowOrder
     #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id')]
     private ?OrderStatus $status;
 
+    #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: "order")]
+    #[ORM\JoinColumn(name: 'customer_id', referencedColumnName: 'id')]
+    private ?Customer $customer;
+
 //    #[ORM\ManyToOne(targetEntity: Installer::class)]
 //    #[ORM\JoinColumn(name: 'installer_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
 //    private ?Installer $installer;
@@ -115,6 +119,17 @@ class WindowOrder
         $this->status = $status;
     }
 
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(?Customer $customer): void
+    {
+        $this->customer = $customer;
+    }
+
+
 //    public function getInstaller(): ?Installer
 //    {
 //        return $this->installer;
@@ -181,7 +196,7 @@ class WindowOrder
         return $data;
     }
 
-    public function getWindowsMeasurement()
+    public function getWindowsMeasurement(): array
     {
         $data = [];
         foreach ($this->getWindows() as $window) {
