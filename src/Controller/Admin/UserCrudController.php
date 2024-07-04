@@ -77,13 +77,7 @@ class UserCrudController extends AbstractCrudController
             $formOptions->set('data_class', $entityDto->getFqcn());
         }
 
-        dump($entityDto, $formOptions, $context); 
         $formBuilder = parent::createNewFormBuilder($entityDto, $formOptions, $context);
-        dump($formBuilder);
-        
-        if ($formBuilder === null) {
-            throw new \RuntimeException('Unable to create form builder');
-        }
 
         return $this->addPasswordEventListener($formBuilder);
     }
@@ -91,10 +85,6 @@ class UserCrudController extends AbstractCrudController
     public function createEditFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface
     {
         $formBuilder = parent::createEditFormBuilder($entityDto, $formOptions, $context);
-
-        if ($formBuilder === null) {
-            throw new \RuntimeException('Unable to create form builder');
-        }
 
         return $this->addPasswordEventListener($formBuilder);
     }
